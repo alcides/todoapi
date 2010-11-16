@@ -1,0 +1,9 @@
+ToDo API
+
+An example of a REST API made in Sinatra, for managing personal todos.
+
+Each todo has an id, a name and a completed status (true, false).
+
+Alcides Fonseca
+me@alcidesfonseca.com
+http://alcidesfonseca.com
