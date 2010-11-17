@@ -27,3 +27,17 @@ class Todo
     @completed = status
   end
 end
+
+def save(memory)
+  marshal_dump = Marshal.dump(memory)
+  file = File.new("memory.dat",'w')
+  file.write marshal_dump
+  file.close
+end
+
+def load_memory
+  file = File.open("memory.dat", 'r')
+  obj = Marshal.load file.read
+  file.close
+  obj
+end

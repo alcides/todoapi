@@ -3,7 +3,11 @@ require 'sinatra'
 require 'erb'
 require 'helpers'
 
-memory = {}
+begin
+  memory = load_memory
+rescue Exception => e
+  memory = {}
+end
 
 before do
   content_type "text/txt", :charset => 'utf-8'
@@ -30,6 +34,7 @@ post '/todos/:id' do
     "Name is required"
   else
     memory[params[:id]] = Todo.new(params[:id], params[:name], "false")
+    save(memory)
     status 201
     "Created"
   end
@@ -45,6 +50,7 @@ put '/todos/:id' do
     else
       memory[params[:id]].completed = "false"
     end
+    save(memory)
     status 200
     "Updated"
   end
@@ -56,6 +62,7 @@ delete '/todos/:id' do
     "Todo not found"
   else
     memory.delete params[:id]
+    save(memory)
     status 200
     "Deleted"
   end
