@@ -9,8 +9,17 @@ rescue Exception => e
   memory = {}
 end
 
+PUT = {}
+
 before do
   content_type "text/txt", :charset => 'utf-8'
+  
+  if request.put?
+    request.body.read.split("&").each do |x| 
+      p = x.split("=");
+      PUT[p[0]] = p[1] 
+    end
+  end
 end
 
 get '/' do
@@ -24,6 +33,19 @@ get '/todos' do
   content_type get_mimetype, :charset => 'utf-8'
   erb :"list.#{format}"
 end
+
+get '/todos/:id' do
+  if not memory.keys.include? params[:id]
+    status 404
+    "Todo already exist"
+  else
+    @todo = memory[params[:id]]
+    format = get_format
+    content_type get_mimetype, :charset => 'utf-8'
+    erb :"todo.#{format}"
+  end
+end
+
 
 post '/todos/:id' do
   if memory.keys.include? params[:id]
@@ -45,11 +67,14 @@ put '/todos/:id' do
     status 404
     "Todo not found"
   else
-    if memory[params[:id]].completed == "false"
-      memory[params[:id]].completed = "true"
-    else
-      memory[params[:id]].completed = "false"
+    if PUT.keys.include? "name"
+      memory[params[:id]].name = PUT["name"]
     end
+    
+    if PUT.keys.include? "completed"
+      memory[params[:id]].completed = (PUT["completed"] == "true")
+    end
+        
     save(memory)
     status 200
     "Updated"

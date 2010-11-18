@@ -1,3 +1,4 @@
+
 def get_format
   if request.accept.include? "application/json"
     "json"
@@ -25,6 +26,16 @@ class Todo
     @id = id
     @name = name
     @completed = status
+  end
+  
+  def status
+    puts "status"
+    puts @completed
+    if @completed
+      "completed"
+    else
+      "uncompleted"
+    end
   end
 end
 
