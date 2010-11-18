@@ -22,7 +22,7 @@
 		<p>May return 405 if already exists, 400 if it has any missing parameter and 201 if everything is okay.</p>
 		<h2>Updating an item</h2>
 		<p><code>PUT /todo/9999</code></p>
-		<p>Will mark item 9999 as completed. If it is already completed, then it will make it uncompleted.</p>
+		<p>Will change the todo item. You may pass as body parameters "name" to change the name of the task, and "completed" to either "true" or "false" to mark it as completed or not.</p>
 		<p>May return 404 if not found or 200 if succeeded.</p>
 		<h2>Delete an item</h2>
 		<p><code>DELETE /todo/9999</code></p>
