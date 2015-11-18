@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'erb'
-require 'helpers'
+require File.expand_path(File.join(File.dirname(__FILE__), 'helpers'))
 
 begin
   memory = load_memory
@@ -47,32 +47,31 @@ get '/todos/:id' do
 end
 
 
-post '/todos/:id' do
+put '/todos/:id' do
   if memory.keys.include? params[:id]
     status 405
     "Todo already exist"
-  elsif not params[:name]
+  elsif not PUT.keys.include? "name"
     status 400
-    "Name is required"
+    "Name is required"  + PUT.to_s
   else
-    memory[params[:id]] = Todo.new(params[:id], params[:name], "false")
+    memory[params[:id]] = Todo.new(params[:id], PUT["name"], "false")
     save(memory)
     status 201
     "Created"
   end
 end
 
-put '/todos/:id' do
+post '/todos/:id' do
   if not memory.keys.include? params[:id]
     status 404
     "Todo not found"
   else
-    if PUT.keys.include? "name"
-      memory[params[:id]].name = PUT["name"]
+    if params.keys.include? :name
+      memory[params[:id]].name = params[:name]
     end
-    
-    if PUT.keys.include? "completed"
-      memory[params[:id]].completed = (PUT["completed"] == "true")
+    if params.keys.include? "completed"
+      memory[params[:id]].completed = (params[:completed] == "true")
     end
         
     save(memory)

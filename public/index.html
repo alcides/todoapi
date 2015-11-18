@@ -17,15 +17,15 @@
 		<p><code>GET /todos</code></p>
 		<p>Should return all items in txt, json or xml format, according to the Accept header.</p>
 		<h2>Creating new items.</h2>
-		<p><code>POST /todo/9999 name=Document API</code></p>
+		<p><code>PUT /todos/9999 name=Document API</code></p>
 		<p>Will create a new item with id 9999, text &#8220;Document <span class="caps">API</span>&#8221; and not completed.</p>
 		<p>May return 405 if already exists, 400 if it has any missing parameter and 201 if everything is okay.</p>
 		<h2>Updating an item</h2>
-		<p><code>PUT /todo/9999</code></p>
+		<p><code>POST /todos/9999</code></p>
 		<p>Will change the todo item. You may pass as body parameters "name" to change the name of the task, and "completed" to either "true" or "false" to mark it as completed or not.</p>
 		<p>May return 404 if not found or 200 if succeeded.</p>
 		<h2>Delete an item</h2>
-		<p><code>DELETE /todo/9999</code></p>
+		<p><code>DELETE /todos/9999</code></p>
 		<p>Will remove completely the item 9999 from the todo list.</p>
 		<p>May return 404 if not found or 200 if succeeded.</p>
 		
